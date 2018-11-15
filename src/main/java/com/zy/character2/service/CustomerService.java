@@ -2,7 +2,6 @@ package com.zy.character2.service;
 
 import com.zy.character2.helper.DatabaseHelper;
 import com.zy.character2.model.Customer;
-import com.zy.character2.util.PropsUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -10,7 +9,6 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 
 /**
  *
@@ -21,27 +19,26 @@ public class CustomerService {
     private static final Logger LOGGER = LoggerFactory.getLogger(CustomerService.class);
 
     public boolean createCustomer(Map<String, Object> fieldMap){
-        //TODO
-        return false;
+
+        return DatabaseHelper.insertEntity(Customer.class, fieldMap);
     }
 
     public boolean deleteCustomer(long id){
-        //TODO
-        return false;
+
+        return DatabaseHelper.deleteEntity(Customer.class, id);
     }
 
     public boolean updateCustomer(long id, Map<String, Object> fieldMap){
-        //TODO
-        return false;
+
+        return DatabaseHelper.updateEntity(Customer.class, id, fieldMap);
     }
 
     public Customer getCustomer(long id){
-        //TODO
-        return null;
+        String sql = "select * from customer where id = ?";
+        return DatabaseHelper.queryEntity(Customer.class, sql ,id);
     }
 
     public List<Customer> getCustomerList(){
-        //TODO
         Connection connection = null;
         try {
             connection = DatabaseHelper.getConnection();
@@ -80,5 +77,10 @@ public class CustomerService {
             DatabaseHelper.closeConnection(connection);
         }
 
+    }
+
+    public List<Customer> getCustomerList2(){
+        String sql = "select * from customer";
+        return DatabaseHelper.queryEntityList(Customer.class, sql);
     }
 }
